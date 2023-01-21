@@ -1,5 +1,20 @@
 import prompts from 'prompts';
 
+export const askForRoll = async (
+  playerName: string,
+  frame: number,
+  roll: 0 | 1 | 2
+): Promise<number> => {
+  const rollQuestion = await prompts<string>({
+    type: 'number',
+    name: 'roll',
+    initial: '',
+    message: `Player ${playerName}, Frame ${frame}, Roll ${roll + 1}:`,
+  });
+
+  return Number(rollQuestion.roll);
+};
+
 export const askForGameType = async () => {
   const gameTypeQuestion = await prompts<string>({
     type: 'text',

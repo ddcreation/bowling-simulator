@@ -14,6 +14,18 @@ interface TemplateReplace {
 export class Game {
   public players: Player[];
 
+  public get currentFrame(): number {
+    return this.players[this.players.length - 1].frames.length + 1;
+  }
+
+  public get currentPlayer(): Player {
+    return (
+      this.players.find(
+        (player, i) => player.frames.length < this.players[i - 1]?.frames.length
+      ) || this.players[0]
+    );
+  }
+
   constructor(players: Player[]) {
     this.players = players;
   }
