@@ -1,16 +1,32 @@
-import { init } from './app';
+import { play, visualize } from './app';
 import { Game } from './models';
 
 jest.mock('./utils', () => ({
-  askForPlayers: jest.fn(() => Promise.resolve(['Player1', 'Player2'])),
+  askForPlayers: jest.fn(() =>
+    Promise.resolve([
+      { name: 'Test1', frames: [] },
+      { name: 'Test2', frames: [] },
+    ])
+  ),
   printFormated: jest.fn((text) => text),
+  frameScore: jest.fn(),
 }));
 
-describe('Init', () => {
+describe('Play', () => {
   it('Should print game board', async () => {
     const printBoardSpy = jest.spyOn(Game.prototype, 'printBoard');
 
-    await init();
+    await play();
+
+    expect(printBoardSpy).toHaveBeenCalledTimes(1);
+  });
+});
+
+describe('Visualize', () => {
+  it('Should print game board', async () => {
+    const printBoardSpy = jest.spyOn(Game.prototype, 'printBoard');
+
+    visualize();
 
     expect(printBoardSpy).toHaveBeenCalledTimes(1);
   });

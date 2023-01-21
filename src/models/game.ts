@@ -1,5 +1,5 @@
 import * as fs from 'fs';
-import { printFormated } from '../utils';
+import { frameScore, printFormated } from '../utils';
 import { Player } from './player.interface';
 
 const templatesPath = `${__dirname}/../templates`;
@@ -13,10 +13,8 @@ interface TemplateReplace {
 export class Game {
   public players: Player[];
 
-  constructor(names: string[]) {
-    this.players = names.map((name) => {
-      return { name, frames: [] };
-    });
+  constructor(players: Player[]) {
+    this.players = players;
   }
 
   public printBoard(): void {
@@ -72,6 +70,8 @@ export class Game {
         ...replacements,
         ...this._generateFrameReplacement(player, i),
       ];
+
+      total += frameScore(player.frames, i) || 0;
     }
 
     replacements.push({
