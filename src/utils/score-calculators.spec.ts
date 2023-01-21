@@ -1,4 +1,3 @@
-import { Frame } from '../models';
 import {
   frameScore,
   isFrameClosed,
@@ -117,6 +116,28 @@ describe('The frameScore function', () => {
           0
         )
       ).toBe(19);
+    });
+  });
+
+  describe('When we are on the last frame', () => {
+    it('Should return cumulative score', () => {
+      expect(
+        frameScore(
+          [
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [5, 5, 3],
+          ],
+          9
+        )
+      ).toBe(13);
     });
   });
 });

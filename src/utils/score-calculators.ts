@@ -22,7 +22,12 @@ export const frameScore = (
   if (frames[frameIndex] !== undefined) {
     const currentScore = frames[frameIndex][0] + frames[frameIndex][1];
 
-    if (isFrameClosed(frames[frameIndex])) {
+    // 10th Frame
+    if (frameIndex === 9) {
+      score = currentScore + frames[frameIndex][2] || 0;
+    }
+    // No spare, no strike... Try again!
+    else if (isFrameClosed(frames[frameIndex])) {
       score = currentScore;
     }
     // Spare and next roll
