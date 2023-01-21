@@ -13,4 +13,9 @@ describe('Print formated', () => {
     const emptyString = printFormated('123456789', 5);
     expect(emptyString).toBe('12...');
   });
+
+  it('Should return string when no length', () => {
+    const emptyString = printFormated('123456789');
+    expect(emptyString).toBe('123456789');
+  });
 });

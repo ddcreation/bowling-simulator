@@ -1,1 +1,3 @@
-| $index | $name | $cells | $total
+| $index | $name |  $frame1Symbol1|$frame1Symbol2|  $frame2Symbol1|$frame2Symbol2|  $frame3Symbol1|$frame3Symbol2|  $frame4Symbol1|$frame4Symbol2|  $frame5Symbol1|$frame5Symbol2|  $frame6Symbol1|$frame6Symbol2|  $frame7Symbol1|$frame7Symbol2|  $frame8Symbol1|$frame8Symbol2|  $frame9Symbol1|$frame9Symbol2| $frame10Symbol1|$frame10Symbol2|$frame10Symbol3|       |
+|   |                             | $frame1Total  | $frame2Total  | $frame3Total  | $frame4Total  | $frame5Total  | $frame6Total  | $frame7Total  | $frame8Total  | $frame9Total  | $frame10Total   |  $total  |
+--------------------------------------------------------------------------------------------------------
