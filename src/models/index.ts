@@ -1,1 +1,1 @@
-export * from "./hello.interface";
+export * from './game';
