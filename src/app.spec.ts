@@ -3,6 +3,7 @@ import { Game } from './models';
 
 jest.mock('./utils', () => ({
   askForPlayers: jest.fn(() => Promise.resolve(['Player1', 'Player2'])),
+  printFormated: jest.fn((text) => text),
 }));
 
 describe('Init', () => {
