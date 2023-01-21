@@ -73,10 +73,9 @@ export class Game {
   ): TemplateReplace[] {
     const replaceIndex = frameIndex + 1;
     const total = frameScore(player.frames, frameIndex)?.toString() || '';
-    const symbols = this._frameSymbols(
-      player.frames[frameIndex],
-      frameIndex === 9
-    );
+    const symbols = player.frames[frameIndex]
+      ? this._frameSymbols(player.frames[frameIndex], frameIndex === 9)
+      : ['', '', ''];
 
     const replacements = [
       {

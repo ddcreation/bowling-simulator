@@ -1,26 +1,26 @@
-import { game1 } from './mocks';
-import { Game } from './models/game';
-import { askForPlayers } from './utils';
+import { exit } from 'process';
+import { askForGameType } from './utils';
+import { play, visualize } from './game-types';
 
-export const visualize = async () => {
-  const game = new Game(game1);
+export const init = async () => {
+  const gameType = await askForGameType();
 
-  console.log('Results of the game:');
-  game.printBoard();
+  switch (gameType) {
+    default: {
+      console.log('No game type choosed, bye bye...');
+      break;
+    }
+    case 'visualize': {
+      visualize();
+      break;
+    }
+    case 'play': {
+      play();
+      break;
+    }
+  }
+
+  exit;
 };
 
-visualize();
-
-export const play = async () => {
-  const players = await askForPlayers();
-
-  const game = new Game(
-    players.map((name: string) => {
-      return { name, frames: [] };
-    })
-  );
-
-  game.printBoard();
-};
-
-// play();
+init();

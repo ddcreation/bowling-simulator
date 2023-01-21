@@ -1,5 +1,16 @@
 import prompts from 'prompts';
 
+export const askForGameType = async () => {
+  const gameTypeQuestion = await prompts<string>({
+    type: 'text',
+    name: 'type',
+    initial: '',
+    message: 'What do you want to do? (play/visualize): ',
+  });
+
+  return gameTypeQuestion.type;
+};
+
 export const askForPlayers = async () => {
   const playersNameQuestion = await prompts<string>({
     type: 'text',
