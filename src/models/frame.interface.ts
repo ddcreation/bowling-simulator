@@ -1,1 +1,1 @@
-export type Frame = [number, number];
+export type Frame = number[];
