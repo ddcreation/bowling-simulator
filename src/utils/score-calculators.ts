@@ -44,6 +44,10 @@ export const frameScore = (
         else if (frames[frameIndex + 2]) {
           score = 10 + 10 + frames[frameIndex + 2][0];
         }
+        // Second strike in last round !!!!!
+        else if (frames[frameIndex + 1][2]) {
+          score = 30;
+        }
       }
     }
   }
