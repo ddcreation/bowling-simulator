@@ -27,7 +27,7 @@ export class Game {
     frameIndex: number
   ): TemplateReplace[] {
     const replaceIndex = frameIndex + 1;
-    let total = '';
+    const total = frameScore(player.frames, frameIndex)?.toString() || '';
     let symbol1 = '';
     let symbol2 = '';
     let symbol3 = '';
@@ -35,7 +35,7 @@ export class Game {
     const replacements = [
       {
         placeholder: `$frame${replaceIndex}Total`,
-        value: total.toString(),
+        value: total,
         length: 2,
       },
       {
