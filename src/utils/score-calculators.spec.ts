@@ -117,6 +117,26 @@ describe('The frameScore function', () => {
         )
       ).toBe(19);
     });
+
+    it('FIX: specific round 9', () => {
+      expect(
+        frameScore(
+          [
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [0, 0],
+            [10, 0],
+            [10, 5, 3],
+          ],
+          8
+        )
+      ).toBe(30);
+    });
   });
 
   describe('When we are on the last frame', () => {
