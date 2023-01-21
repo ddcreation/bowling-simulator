@@ -9,6 +9,7 @@ jest.mock('./utils', () => ({
       { name: 'Test2', frames: [] },
     ])
   ),
+  askForRoll: jest.fn((number: number) => number.toString()),
   printFormated: jest.fn((text) => text),
   frameScore: jest.fn(),
 }));
@@ -20,12 +21,12 @@ describe('Play', () => {
     expect(askForPlayers).toHaveBeenCalledTimes(1);
   });
 
-  it('Should print game board', async () => {
+  it('Should print game board on each input', async () => {
     const printBoardSpy = jest.spyOn(Game.prototype, 'printBoard');
 
     await play();
 
-    expect(printBoardSpy).toHaveBeenCalledTimes(1);
+    expect(printBoardSpy).toHaveBeenCalledTimes(20);
   });
 });
 

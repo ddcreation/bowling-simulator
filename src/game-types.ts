@@ -1,6 +1,7 @@
 import { Game } from './models/game';
-import { askForPlayers } from './utils';
+import { askForPlayers, askForRoll } from './utils';
 import { game1 } from './mocks';
+import { exit } from 'process';
 
 export const play = async () => {
   const players = await askForPlayers();
@@ -12,6 +13,36 @@ export const play = async () => {
   );
 
   game.printBoard();
+
+  while (game.currentFrame <= 10) {
+    const lastFrame = game.currentFrame === 10;
+    const currentPlayer = game.currentPlayer;
+
+    const bowl1 = await askForRoll(currentPlayer.name, game.currentFrame, 0);
+
+    if (!lastFrame) {
+      if (bowl1 === 10) {
+        currentPlayer.frames.push([10, 0]);
+      } else {
+        const bowl2 = await askForRoll(
+          currentPlayer.name,
+          game.currentFrame,
+          1
+        );
+        currentPlayer.frames.push([bowl1, bowl2]);
+      }
+    } else {
+      console.warn('SORRY!, last frame is not convered yet');
+      break;
+    }
+
+    game.printBoard();
+  }
+
+  console.log('Final results of the game:');
+  game.printBoard();
+  console.log('Congrats to the winner 🎉');
+  exit;
 };
 
 export const visualize = async () => {
@@ -19,4 +50,5 @@ export const visualize = async () => {
 
   console.log('Results of the game:');
   game.printBoard();
+  exit;
 };
