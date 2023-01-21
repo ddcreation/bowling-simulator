@@ -1,5 +1,6 @@
 import * as fs from 'fs';
 import { frameScore, printFormated } from '../utils';
+import { Frame } from './frame.interface';
 import { Player } from './player.interface';
 
 const templatesPath = `${__dirname}/../templates`;
@@ -22,15 +23,60 @@ export class Game {
     this._printBody();
   }
 
+  private _frameSymbols(frame: Frame, lastRound = false) {
+    const symbols = [];
+
+    // Symbol 1
+    symbols.push(this._frameRollToSymbol(frame[0]));
+
+    // Symbol 2
+    // Strike case
+    if (!lastRound && frame[0] === 10) {
+      symbols.push('');
+    } else {
+      symbols.push(
+        frame[0] !== 10 && frame[0] + frame[1] === 10
+          ? '/'
+          : this._frameRollToSymbol(frame[1])
+      );
+    }
+
+    // Symbol 3
+    if (frame[2] !== undefined) {
+      symbols.push(
+        frame[1] !== 10 && frame[1] + frame[2] === 10
+          ? '/'
+          : this._frameRollToSymbol(frame[2])
+      );
+    }
+
+    return symbols;
+  }
+
+  private _frameRollToSymbol(pins: number): string {
+    let symbol = '';
+
+    if (pins === 10) {
+      symbol = 'X';
+    } else if (pins === 0) {
+      symbol = '-';
+    } else {
+      symbol = pins.toString();
+    }
+
+    return symbol;
+  }
+
   private _generateFrameReplacement(
     player: Player,
     frameIndex: number
   ): TemplateReplace[] {
     const replaceIndex = frameIndex + 1;
     const total = frameScore(player.frames, frameIndex)?.toString() || '';
-    let symbol1 = '';
-    let symbol2 = '';
-    let symbol3 = '';
+    const symbols = this._frameSymbols(
+      player.frames[frameIndex],
+      frameIndex === 9
+    );
 
     const replacements = [
       {
@@ -40,12 +86,12 @@ export class Game {
       },
       {
         placeholder: `$frame${replaceIndex}Symbol1`,
-        value: symbol1,
+        value: symbols[0],
         length: 1,
       },
       {
         placeholder: `$frame${replaceIndex}Symbol2`,
-        value: symbol2,
+        value: symbols[1],
         length: 1,
       },
     ];
@@ -53,7 +99,7 @@ export class Game {
     if (replaceIndex === 10) {
       replacements.push({
         placeholder: `$frame${replaceIndex}Symbol3`,
-        value: symbol3,
+        value: symbols[2] || '',
         length: 1,
       });
     }
