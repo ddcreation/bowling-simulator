@@ -12,23 +12,24 @@ export const askForGameType = async () => {
 };
 
 export const askForPlayers = async () => {
-  const playersNameQuestion = await prompts<string>({
-    type: 'text',
-    name: 'players',
-    initial: '',
-    message: "What are the player's names? (comma separated): ",
-    validate: (names: string) => {
-      if (names === '') {
-        return `We need at least 1 player!`;
-      }
+  let i = 1;
+  const players = [];
 
-      if (names.split(',').length > 9) {
-        return `9 players maximum`;
-      }
+  while (i < 10) {
+    const playerNameQuestion = await prompts<string>({
+      type: 'text',
+      name: 'name',
+      initial: '',
+      message: `Enter name of player ${i}:`,
+    });
 
-      return true;
-    },
-  });
+    if (playerNameQuestion.name.length === 0) {
+      break;
+    }
 
-  return playersNameQuestion.players.split(',');
+    players.push(playerNameQuestion.name);
+    i++;
+  }
+
+  return players;
 };
