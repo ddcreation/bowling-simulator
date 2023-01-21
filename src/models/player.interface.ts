@@ -1,4 +1,6 @@
+import { Frame } from './frame.interface';
+
 export interface Player {
   name: string;
-  frames: [number, number][];
+  frames: Frame[];
 }
