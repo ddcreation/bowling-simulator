@@ -1,18 +1,12 @@
 import { init } from './app';
-import { SayHello } from './utils';
-
-jest.mock('./utils', () => {
-  const original = jest.requireActual('./utils');
-  return {
-    ...original,
-    SayHello: jest.fn(),
-  };
-});
+import { Game } from './models';
 
 describe('Init', () => {
-  it('Should call SayHello', () => {
+  it('Should print game board', () => {
+    const printBoardSpy = jest.spyOn(Game.prototype, 'printBoard');
+
     init();
 
-    expect(SayHello).toHaveBeenCalledTimes(1);
+    expect(printBoardSpy).toHaveBeenCalledTimes(1);
   });
 });
