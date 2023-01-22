@@ -16,8 +16,6 @@ This project letyou visualize a bowling game board (mocked), or let you enter ea
 
 ## Next steps
 
-- More tests
-- Validate bowl inputs (first bowl <= 10, second bowl <= left pins)
 - Print board on each roll (now it needs a finished user's frame to show you the results)
 - Store played games (DB?)
 - More games visualization (DB?)

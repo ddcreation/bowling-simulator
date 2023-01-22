@@ -3,7 +3,8 @@ import prompts from 'prompts';
 export const askForRoll = async (
   playerName: string,
   frame: number,
-  roll: 0 | 1 | 2
+  roll: 0 | 1 | 2,
+  previousRoll = 0
 ): Promise<number> => {
   const rollQuestion = await prompts<string>({
     type: 'number',
@@ -14,9 +15,15 @@ export const askForRoll = async (
 
   const result = Number(rollQuestion.roll);
 
-  if (result > 10) {
+  if (
+    result > 10 ||
+    (roll === 1 && previousRoll < 10 && previousRoll + result > 10)
+  ) {
     console.warn("There's only 10 pins!!!");
-    return askForRoll(playerName, frame, roll);
+    return askForRoll(playerName, frame, roll, previousRoll);
+  } else if (result < 0) {
+    console.warn('How you could fall a negative number of pins?');
+    return askForRoll(playerName, frame, roll, previousRoll);
   }
 
   return result;
