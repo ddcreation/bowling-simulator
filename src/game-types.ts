@@ -3,6 +3,31 @@ import { askForPlayers, askForRoll, printCongrats } from './utils';
 import { game1 } from './mocks';
 import { exit } from 'process';
 
+export const playFrame = async (game: Game) => {
+  const lastFrame = game.currentFrame === 10;
+  const currentPlayer = game.currentPlayer;
+
+  const bowl1 = await askForRoll(currentPlayer.name, game.currentFrame, 0);
+
+  if (!lastFrame) {
+    if (bowl1 === 10) {
+      currentPlayer.frames.push([10, 0]);
+    } else {
+      const bowl2 = await askForRoll(currentPlayer.name, game.currentFrame, 1);
+      currentPlayer.frames.push([bowl1, bowl2]);
+    }
+  } else {
+    const bowl2 = await askForRoll(currentPlayer.name, game.currentFrame, 1);
+
+    if (bowl1 + bowl2 >= 10) {
+      const bowl3 = await askForRoll(currentPlayer.name, game.currentFrame, 2);
+      currentPlayer.frames.push([bowl1, bowl2, bowl3]);
+    } else {
+      currentPlayer.frames.push([bowl1, bowl2]);
+    }
+  }
+};
+
 export const play = async () => {
   const players = await askForPlayers();
 
@@ -15,36 +40,7 @@ export const play = async () => {
   game.printBoard();
 
   while (game.currentFrame <= 10) {
-    const lastFrame = game.currentFrame === 10;
-    const currentPlayer = game.currentPlayer;
-
-    const bowl1 = await askForRoll(currentPlayer.name, game.currentFrame, 0);
-
-    if (!lastFrame) {
-      if (bowl1 === 10) {
-        currentPlayer.frames.push([10, 0]);
-      } else {
-        const bowl2 = await askForRoll(
-          currentPlayer.name,
-          game.currentFrame,
-          1
-        );
-        currentPlayer.frames.push([bowl1, bowl2]);
-      }
-    } else {
-      const bowl2 = await askForRoll(currentPlayer.name, game.currentFrame, 1);
-
-      if (bowl1 + bowl2 >= 10) {
-        const bowl3 = await askForRoll(
-          currentPlayer.name,
-          game.currentFrame,
-          2
-        );
-        currentPlayer.frames.push([bowl1, bowl2, bowl3]);
-      } else {
-        currentPlayer.frames.push([bowl1, bowl2]);
-      }
-    }
+    await playFrame(game);
 
     game.printBoard();
   }
