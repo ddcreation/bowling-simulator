@@ -47,4 +47,26 @@ describe('AskForRoll', () => {
       expect(finalResult).toBe(5);
     });
   });
+
+  describe('When second roll is out of bounds', () => {
+    beforeEach(() => {
+      mockedPrompts.mockImplementationOnce(() =>
+        Promise.resolve({ roll: '6' })
+      );
+    });
+
+    it('Should warn user', async () => {
+      const consoleSpy = jest.spyOn(console, 'warn');
+
+      await askForRoll('name', 5, 1, 5);
+
+      expect(consoleSpy).toHaveBeenCalledWith("There's only 10 pins!!!");
+    });
+
+    it('Should ask again for the roll', async () => {
+      const finalResult = await gamePrompts.askForRoll('name', 5, 1, 5);
+
+      expect(finalResult).toBe(5);
+    });
+  });
 });

@@ -13,11 +13,21 @@ export const playFrame = async (game: Game) => {
     if (bowl1 === 10) {
       currentPlayer.frames.push([10, 0]);
     } else {
-      const bowl2 = await askForRoll(currentPlayer.name, game.currentFrame, 1);
+      const bowl2 = await askForRoll(
+        currentPlayer.name,
+        game.currentFrame,
+        1,
+        bowl1
+      );
       currentPlayer.frames.push([bowl1, bowl2]);
     }
   } else {
-    const bowl2 = await askForRoll(currentPlayer.name, game.currentFrame, 1);
+    const bowl2 = await askForRoll(
+      currentPlayer.name,
+      game.currentFrame,
+      1,
+      bowl1
+    );
 
     if (bowl1 + bowl2 >= 10) {
       const bowl3 = await askForRoll(currentPlayer.name, game.currentFrame, 2);
