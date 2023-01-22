@@ -9,7 +9,7 @@
     "build": "tsc",
     "test": "jest --silent",
     "test:watch": "jest --watch --silent",
-    "test:cov": "jest --coverage",
+    "test:cov": "jest --silent --coverage",
     "lint": "eslint .",
     "clean": "rimraf dist/",
     "copy-templates": "copyfiles -u 1 src/templates/*.txt dist"
