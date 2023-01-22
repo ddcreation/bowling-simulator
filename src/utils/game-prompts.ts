@@ -12,7 +12,14 @@ export const askForRoll = async (
     message: `Player ${playerName}, Frame ${frame}, Roll ${roll + 1}:`,
   });
 
-  return Number(rollQuestion.roll);
+  const result = Number(rollQuestion.roll);
+
+  if (result > 10) {
+    console.warn("There's only 10 pins!!!");
+    return askForRoll(playerName, frame, roll);
+  }
+
+  return result;
 };
 
 export const askForGameType = async () => {
