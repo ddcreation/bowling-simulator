@@ -1,4 +1,4 @@
-import { printFormated } from './formated-print';
+import { printFormated } from './template-manager';
 
 describe('Print formated', () => {
   it('Should return a sting with fix length', () => {
