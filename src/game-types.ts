@@ -1,5 +1,5 @@
 import { Game } from './models/game';
-import { askForPlayers, askForRoll } from './utils';
+import { askForPlayers, askForRoll, printCongrats } from './utils';
 import { game1 } from './mocks';
 import { exit } from 'process';
 
@@ -51,7 +51,7 @@ export const play = async () => {
 
   console.log('Final results of the game:');
   game.printBoard();
-  console.log('Congrats to the winner 🎉');
+  printCongrats(game.bestPlayer);
   exit;
 };
 
@@ -60,5 +60,6 @@ export const visualize = async () => {
 
   console.log('Results of the game:');
   game.printBoard();
+  printCongrats(game.bestPlayer);
   exit;
 };

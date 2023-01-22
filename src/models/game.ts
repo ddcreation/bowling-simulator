@@ -17,8 +17,30 @@ export class Game {
     );
   }
 
+  public get bestPlayer(): string {
+    const scores: { player: string; total: number }[] = [];
+
+    this.players.forEach((player) => {
+      scores.push({
+        player: player.name,
+        total: this.getTotalForPlayer(player),
+      });
+    });
+
+    return scores.sort((playerA, playerB) =>
+      playerA.total > playerB.total ? -1 : 1
+    )[0].player;
+  }
+
   constructor(players: Player[]) {
     this.players = players;
+  }
+
+  public getTotalForPlayer(player: Player): number {
+    return player.frames.reduce(
+      (total, frame, i) => total + (frameScore(player.frames, i) || 0),
+      0
+    );
   }
 
   public printBoard(): void {
@@ -114,20 +136,17 @@ export class Game {
 
   private _generateFramesReplacements(player: Player): TemplateReplace[] {
     let replacements: TemplateReplace[] = [];
-    let total = 0;
 
     for (let i = 0; i < 10; i++) {
       replacements = [
         ...replacements,
         ...this._generateFrameReplacement(player, i),
       ];
-
-      total += frameScore(player.frames, i) || 0;
     }
 
     replacements.push({
       placeholder: '$total',
-      value: total.toString(),
+      value: this.getTotalForPlayer(player).toString(),
       length: 3,
     });
 
