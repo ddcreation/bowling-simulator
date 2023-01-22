@@ -32,8 +32,18 @@ export const play = async () => {
         currentPlayer.frames.push([bowl1, bowl2]);
       }
     } else {
-      console.warn('SORRY!, last frame is not convered yet');
-      break;
+      const bowl2 = await askForRoll(currentPlayer.name, game.currentFrame, 1);
+
+      if (bowl1 + bowl2 >= 10) {
+        const bowl3 = await askForRoll(
+          currentPlayer.name,
+          game.currentFrame,
+          2
+        );
+        currentPlayer.frames.push([bowl1, bowl2, bowl3]);
+      } else {
+        currentPlayer.frames.push([bowl1, bowl2]);
+      }
     }
 
     game.printBoard();
