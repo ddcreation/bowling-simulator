@@ -10,8 +10,8 @@ jest.mock('./utils', () => ({
     ])
   ),
   askForRoll: jest.fn((number: number) => number.toString()),
-  printFormated: jest.fn((text) => text),
   frameScore: jest.fn(),
+  printTemplate: jest.fn(),
 }));
 
 describe('Play', () => {
@@ -26,7 +26,7 @@ describe('Play', () => {
 
     await play();
 
-    expect(printBoardSpy).toHaveBeenCalledTimes(20);
+    expect(printBoardSpy).toHaveBeenCalledTimes(22);
   });
 });
 

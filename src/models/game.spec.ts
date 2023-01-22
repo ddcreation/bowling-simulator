@@ -1,9 +1,10 @@
 import { fakePlayers } from '../mocks';
+import { printTemplate } from '../utils';
 import { Game } from './game';
 
 jest.mock('../utils', () => ({
-  printFormated: jest.fn((text) => text),
   frameScore: jest.fn(),
+  printTemplate: jest.fn(),
 }));
 
 describe('Game', () => {
@@ -19,14 +20,10 @@ describe('Game', () => {
   describe('When the board is printed', () => {
     const game = new Game(fakePlayers);
 
-    it('Should print header and body', () => {
-      const printHeaderSpy = jest.spyOn(game, '_printHeader' as any);
-      const printBodySpy = jest.spyOn(game, '_printBody' as any);
-
+    it('Should print header and a row by player', () => {
       game.printBoard();
 
-      expect(printHeaderSpy).toHaveBeenCalledTimes(1);
-      expect(printBodySpy).toHaveBeenCalledTimes(1);
+      expect(printTemplate).toHaveBeenCalledTimes(1 + fakePlayers.length);
     });
   });
 });

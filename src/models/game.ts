@@ -1,15 +1,6 @@
-import * as fs from 'fs';
-import { frameScore, printFormated } from '../utils';
+import { frameScore, printTemplate, TemplateReplace } from '../utils';
 import { Frame } from './frame.interface';
 import { Player } from './player.interface';
-
-const templatesPath = `${__dirname}/../templates`;
-
-interface TemplateReplace {
-  placeholder: string;
-  value: string;
-  length?: number;
-}
 
 export class Game {
   public players: Player[];
@@ -31,8 +22,11 @@ export class Game {
   }
 
   public printBoard(): void {
-    this._printHeader();
-    this._printBody();
+    printTemplate('header');
+
+    this.players.forEach((player, idx) => {
+      printTemplate('row', this._generateRowReplacements(player, idx));
+    });
   }
 
   private _frameSymbols(frame: Frame, lastRound = false) {
@@ -140,35 +134,14 @@ export class Game {
     return replacements;
   }
 
-  private _printBody(): void {
-    this.players.forEach((player, idx) => this._printRow(player, idx));
-  }
-
-  private _printHeader(): void {
-    const header = fs.readFileSync(`${templatesPath}/board-header.txt`, {
-      encoding: 'utf8',
-    });
-    console.log(header);
-  }
-
-  private _printRow(player: Player, index: number): void {
-    const rowRaw = fs.readFileSync(`${templatesPath}/board-row.txt`, {
-      encoding: 'utf8',
-    });
-
-    const replacements: TemplateReplace[] = [
+  private _generateRowReplacements(
+    player: Player,
+    index: number
+  ): TemplateReplace[] {
+    return [
       { placeholder: '$index', value: (index + 1).toString(), length: 1 },
       { placeholder: '$name', value: player.name, length: 27 },
       ...this._generateFramesReplacements(player),
     ];
-
-    const row = replacements.reduce((output, config) => {
-      return output.replace(
-        config.placeholder,
-        printFormated(config.value, config.length)
-      );
-    }, rowRaw);
-
-    console.log(row);
   }
 }
