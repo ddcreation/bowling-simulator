@@ -1,6 +1,6 @@
 import * as fs from 'fs';
 
-const templatesPath = `${__dirname}/../templates`;
+export const templatesPath = `${__dirname}/../templates`;
 
 export interface TemplateReplace {
   placeholder: string;
@@ -41,9 +41,9 @@ export const printCongrats = (playerName: string): void => {
   console.log(`Congrats to the winner "${playerName}" 🎉`);
 };
 
-const templateReplacement = (
+export const templateReplacement = (
   rawTemplate: string,
-  replacements: TemplateReplace[]
+  replacements: TemplateReplace[] = []
 ): string => {
   return replacements.reduce((output, config) => {
     return output.replace(
