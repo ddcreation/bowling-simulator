@@ -37,6 +37,10 @@ export const printTemplate = (
   console.log(output);
 };
 
+export const printCongrats = (playerName: string): void => {
+  console.log(`Congrats to the winner "${playerName}" 🎉`);
+};
+
 const templateReplacement = (
   rawTemplate: string,
   replacements: TemplateReplace[]

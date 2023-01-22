@@ -11,6 +11,7 @@ jest.mock('./utils', () => ({
   ),
   askForRoll: jest.fn((number: number) => number.toString()),
   frameScore: jest.fn(),
+  printCongrats: jest.fn(),
   printTemplate: jest.fn(),
 }));
 
