@@ -1,21 +1,21 @@
 import {
   frameScore,
-  isFrameClosed,
+  isFrameOpened,
   isSpare,
   isStrike,
 } from './score-calculators';
 
-describe('The isFrameClosed function', () => {
+describe('The isFrameOpened function', () => {
   it('Should return false for spare', () => {
-    expect(isFrameClosed([2, 8])).toBe(false);
+    expect(isFrameOpened([2, 8])).toBe(false);
   });
 
   it('Should return false for strike', () => {
-    expect(isFrameClosed([10, 0])).toBe(false);
+    expect(isFrameOpened([10, 0])).toBe(false);
   });
 
   it('Should return true for others', () => {
-    expect(isFrameClosed([8, 1])).toBe(true);
+    expect(isFrameOpened([8, 1])).toBe(true);
   });
 });
 

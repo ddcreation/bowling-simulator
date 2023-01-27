@@ -1,6 +1,6 @@
 import { Frame } from '../models';
 
-export const isFrameClosed = (frame: Frame): boolean => {
+export const isFrameOpened = (frame: Frame): boolean => {
   const frameScore = frame[0] + frame[1];
   return frameScore < 10;
 };
@@ -27,7 +27,7 @@ export const frameScore = (
       score = currentScore + frames[frameIndex][2] || 0;
     }
     // No spare, no strike... Try again!
-    else if (isFrameClosed(frames[frameIndex])) {
+    else if (isFrameOpened(frames[frameIndex])) {
       score = currentScore;
     }
     // Spare and next roll
